@@ -4,17 +4,44 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-var roomList = [];
-
 var rooms = {};
 
 app.get("/", (req, res) => {
   console.log("Hi");
-});
-app.put("/allrooms", (req, res) => {
-  roomList.push(req.body.id);
 
-  console.log(roomList, roomList.indexOf(req.body.id));
+app.get("/allrooms", (req, res) => {
+  return res.status(200).send(Object.keys(rooms));
+});
+
+app.post("/allrooms", (req, res) => {
+  if (!(req.body.id in rooms)) {
+    rooms[req.body.id] = {
+      users: []
+    };
+    return res.status(201).send({ id: req.body.id });
+  } else {
+    return res.status(404).send(req.body.id + " already exists");
+  }
+});
+
+app.put("/allrooms", (req, res) => {
+  if (!(req.body.id in rooms)) {
+    rooms[req.body.id] = {
+      users: []
+    };
+    return res.status(201).send({ id: req.body.id });
+  } else {
+    return res.status(200).send({ id: req.body.id });
+  }
+});
+
+app.delete("/allrooms", (req, res) => {
+  if (req.body.id in rooms) {
+    delete rooms[req.body.id];
+    return res.status(200).send(req.body.id + " is deleted");
+  } else {
+    return res.status(404).send(req.body.id + " is not found");
+  }
 });
 
 // room
