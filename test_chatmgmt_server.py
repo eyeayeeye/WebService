@@ -11,6 +11,9 @@ import pytest
 # configuration for the location of test servers
 servers = [
     'http://localhost:8000',
+
+    # 'http://35.247.191.146:5000',
+    # 'http://35.197.139.41:5000'
 ]
 
 
@@ -23,6 +26,7 @@ class ChatMgmtClient:
 
     def get_room_list(self):
         r = requests.get(self.allrooms_url)
+        print(r.json())
         return r.json(), r.status_code
 
     def add_newroom(self, room_id):
