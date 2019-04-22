@@ -11,6 +11,7 @@ import pytest
 # configuration for the location of test servers
 servers = [
     'http://localhost:8000',
+    'http://localhost:8001'
 
     # 'http://35.247.191.146:5000',
     # 'http://35.197.139.41:5000'
